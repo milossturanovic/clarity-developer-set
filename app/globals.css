@@ -1,0 +1,86 @@
+/**
+ * ============================================================================
+ * GLOBAL STYLES — light minimal baseline
+ * ============================================================================
+ *
+ * WHAT THIS IS:
+ *   Tailwind layers + CSS variables for the Clarity Developer Set shell.
+ *   Default theme is light / minimal. Design phase can refine tokens later.
+ *
+ * DEVELOPER EDIT NOTES:
+ *   1. Change colors by editing the :root CSS variables below.
+ *   2. Avoid hardcoding colors in components — use theme tokens (bg-background, text-foreground, etc.).
+ *
+ * ============================================================================
+ */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 240 6% 10%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 6% 10%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 6% 10%;
+    --primary: 240 6% 10%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 240 5% 96%;
+    --secondary-foreground: 240 6% 10%;
+    --muted: 240 5% 96%;
+    --muted-foreground: 240 4% 46%;
+    --accent: 240 5% 96%;
+    --accent-foreground: 240 6% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 6% 90%;
+    --input: 240 6% 90%;
+    --ring: 240 6% 10%;
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+}
+
+/* Hero entrance — restrained, editorial */
+@layer utilities {
+  @keyframes hero-fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes hero-fade-in {
+    from {
+      opacity: 0;
+      transform: scale(0.985);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  .hero-fade-up {
+    animation: hero-fade-up 0.7s ease-out both;
+  }
+
+  .hero-fade-in {
+    animation: hero-fade-in 0.9s ease-out 0.12s both;
+  }
+}

@@ -1,0 +1,100 @@
+{
+  "_comment": "EDIT THIS FILE TO MANAGE YOUR PORTFOLIO. See lib/projects-data.ts for the full schema.",
+  "_workflow": "1) Edit a project. 2) `npm run dev` to preview. 3) `git commit -am '...' && git push` to deploy.",
+  "_required_fields": ["id", "slug", "title", "description", "category", "tech", "completed"],
+  "_optional_fields": [
+    "status",
+    "featured",
+    "tags",
+    "label",
+    "year",
+    "keyOutcome",
+    "completionDate",
+    "client",
+    "duration",
+    "coverImage",
+    "websiteUrl",
+    "githubUrl",
+    "highlights",
+    "impact",
+    "screenshots"
+  ],
+  "_enums": {
+    "status": ["draft", "published"],
+    "category": ["creative", "real-estate", "corporate"],
+    "tech": ["wordpress", "react", "nextjs", "php"]
+  },
+  "projects": [
+    {
+      "id": "1",
+      "slug": "northside-cafe",
+      "status": "published",
+      "featured": true,
+      "title": "Northside Café",
+      "label": "Landing page",
+      "year": "2025",
+      "description": "A responsive marketing page for a fictional neighborhood café — menu highlights, hours, and a simple contact section.",
+      "keyOutcome": "Mobile-first layout",
+      "category": "creative",
+      "tech": ["nextjs", "react"],
+      "tags": ["Next.js", "Tailwind", "Responsive"],
+      "completed": "2025",
+      "completionDate": "2025",
+      "client": "Personal",
+      "duration": "1 week",
+      "websiteUrl": "https://example.com",
+      "githubUrl": "https://github.com/example/northside-cafe",
+      "highlights": [
+        "Practiced section layout, typography hierarchy, and spacing.",
+        "Made the menu and hours readable on phone without a hamburger maze."
+      ]
+    },
+    {
+      "id": "2",
+      "slug": "weather-dashboard",
+      "status": "published",
+      "featured": true,
+      "title": "Weather dashboard",
+      "label": "API practice",
+      "year": "2025",
+      "description": "Practiced fetching live data, loading states, and error handling with a public weather API.",
+      "keyOutcome": "City search + 5-day view",
+      "category": "corporate",
+      "tech": ["react", "nextjs"],
+      "tags": ["React", "Fetch API", "CSS"],
+      "completed": "2025",
+      "completionDate": "2025",
+      "client": "Personal",
+      "duration": "1 week",
+      "websiteUrl": "https://example.com",
+      "githubUrl": "https://github.com/example/weather-dashboard",
+      "highlights": [
+        "Handled loading and empty states for a better first impression.",
+        "Kept components small so the data flow stayed easy to follow."
+      ]
+    },
+    {
+      "id": "3",
+      "slug": "task-board",
+      "status": "published",
+      "featured": true,
+      "title": "Task board",
+      "label": "CRUD UI",
+      "year": "2024",
+      "description": "A simple kanban-style board to practice state, forms, and keeping the UI in sync with local data.",
+      "keyOutcome": "Add, edit, and filter tasks",
+      "category": "corporate",
+      "tech": ["react"],
+      "tags": ["React", "TypeScript", "Local state"],
+      "completed": "2024",
+      "completionDate": "2024",
+      "client": "Personal",
+      "duration": "10 days",
+      "githubUrl": "https://github.com/example/task-board",
+      "highlights": [
+        "Used controlled forms and clear empty states.",
+        "Focused on accessibility basics: labels, focus, and keyboard use."
+      ]
+    }
+  ]
+}
