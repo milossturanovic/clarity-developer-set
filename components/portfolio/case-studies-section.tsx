@@ -102,7 +102,7 @@ function CaseStudyCardItem({
           // eslint-disable-next-line @next/next/no-img-element -- buyer cover paths / remote URLs
           <img
             src={project.image}
-            alt=""
+            alt={`${project.title} preview`}
             className="aspect-[4/3] w-full object-cover"
           />
         ) : (
@@ -198,7 +198,7 @@ export async function CaseStudiesSection({
       aria-labelledby={headingId}
       className={cn("bg-white", className)}
     >
-      <div className="mx-auto max-w-6xl px-6 py-16 sm:px-8 sm:py-20 lg:py-24">
+      <div className="mx-auto max-w-6xl px-6 py-16 sm:px-8 sm:py-20">
         <header className="max-w-3xl">
           <h2
             id={headingId}

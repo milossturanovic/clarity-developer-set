@@ -43,7 +43,7 @@ export function DisciplinesSection({
       aria-labelledby={headingId}
       className={cn("bg-white", className)}
     >
-      <div className="mx-auto max-w-6xl px-6 py-16 sm:px-8 sm:py-20 lg:py-24">
+      <div className="mx-auto max-w-6xl px-6 py-16 sm:px-8 sm:py-20">
         <header className="max-w-3xl">
           <h2
             id={headingId}

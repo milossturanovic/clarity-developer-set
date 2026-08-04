@@ -1,2 +1,5 @@
-# Place buyer assets here (images, resume PDF, favicon, etc.).
-# Reference them from data/projects.json as /your-file.png
+# Place buyer assets here (images, favicon, etc.).
+#
+# Resume: add your PDF as `resume.pdf` in this folder.
+# The hero “Download resume” link points to /resume.pdf by default
+# (change the path in config/site.ts → hero.secondaryCta.href if needed).

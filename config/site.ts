@@ -15,7 +15,8 @@
  *   4. Edit hero.headlineSuffix, hero.bio, hero CTAs, and hero.stats for the home page.
  *   5. Edit disciplines.title, disciplines.intro, and disciplines.items for the skills section.
  *   6. Edit caseStudies.title and caseStudies.intro; card content lives in data/projects.json.
- *   7. Add or remove navItems as needed (href should match a real route).
+ *   7. Edit services.title, services.intro, and services.items.
+ *   8. Add or remove navItems as needed (href should match a real route).
  *
  * ============================================================================
  */
@@ -68,9 +69,15 @@ export const siteConfig = {
       href: "/projects",
     },
     secondaryCta: {
-      label: "Get in touch",
-      href: "/contact",
+      label: "Download resume",
+      /** Put your PDF at public/resume.pdf (or change this path). */
+      href: "/resume.pdf",
+      download: true,
     },
+    /** Remote or /public image for the hero panel. Leave empty for the placeholder. */
+    image:
+      "https://images.pexels.com/photos/37862666/pexels-photo-37862666.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    imageAlt: "Confident businessman in an office with a laptop",
     stats: [
       { label: "Discipline", value: "Front end" },
       { label: "Experience", value: "Starting out" },
@@ -121,5 +128,52 @@ export const siteConfig = {
     intro:
       "A few builds from my learning path — each one focused on a concrete skill, not a made-up client metric.",
     ctaLabel: "View project",
+  },
+
+  // ---------------------------------------------------------------------------
+  // SERVICES — interactive preview + list section
+  // ---------------------------------------------------------------------------
+  services: {
+    title: "What I can help with",
+    intro:
+      "Practical front-end work I’m ready to take on — clear layouts, React UIs, and careful polish on every screen.",
+    items: [
+      {
+        id: "responsive-layouts",
+        title: "Responsive layouts",
+        description:
+          "Mobile-first pages that stay readable and tidy from phone to desktop — solid structure before fancy flourishes.",
+        image:
+          "https://images.pexels.com/photos/1092644/pexels-photo-1092644.jpeg?auto=compress&cs=tinysrgb&w=1000",
+        imageTone: "sand",
+      },
+      {
+        id: "react-interfaces",
+        title: "React interfaces",
+        description:
+          "Component-driven UI with React and TypeScript — forms, navigation, and interactive pieces that stay easy to follow.",
+        image:
+          "https://images.pexels.com/photos/1181263/pexels-photo-1181263.jpeg?auto=compress&cs=tinysrgb&w=1000",
+        imageTone: "slate",
+      },
+      {
+        id: "landing-pages",
+        title: "Landing pages",
+        description:
+          "Marketing and portfolio pages with clear hierarchy, spacing, and CTAs that guide someone to the next step.",
+        image:
+          "https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&w=1000",
+        imageTone: "rose",
+      },
+      {
+        id: "ui-polish",
+        title: "UI polish",
+        description:
+          "Accessibility basics, focus states, loading and empty states — the small details that make a build feel finished.",
+        image:
+          "https://images.pexels.com/photos/326503/pexels-photo-326503.jpeg?auto=compress&cs=tinysrgb&w=1000",
+        imageTone: "teal",
+      },
+    ],
   },
 }

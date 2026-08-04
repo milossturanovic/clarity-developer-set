@@ -9,15 +9,14 @@
  *
  * DEVELOPER EDIT NOTES:
  *   1. Edit headline, bio, CTAs, and stats in config/site.ts → hero.
- *   2. Replace the placeholder panel later with a real portrait or product shot
- *      (pass a cover via public/ and update this section when ready).
+ *   2. Set hero.image to a remote URL or /public path (leave empty for the SVG placeholder).
  *   3. Keep a single h1 on the home page.
  *
  * ============================================================================
  */
 
 import Link from "next/link"
-import { ArrowRight, Mail } from "lucide-react"
+import { ArrowRight, Download } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { siteConfig } from "@/config/site"
@@ -92,7 +91,7 @@ export function HeroSection() {
       aria-labelledby="hero-heading"
       className="flex min-h-[100dvh] flex-col justify-center bg-background"
     >
-      <div className="mx-auto grid w-full max-w-6xl flex-1 items-center gap-12 px-6 py-16 sm:px-8 sm:py-20 lg:grid-cols-2 lg:gap-16 lg:py-24 xl:gap-20">
+      <div className="mx-auto grid w-full max-w-6xl flex-1 items-center gap-12 px-6 py-16 sm:px-8 sm:py-20 lg:grid-cols-2 lg:gap-16 xl:gap-20">
         {/* ------------------------------------------------------------------ */}
         {/* LEFT — copy, CTAs, stats                                            */}
         {/* ------------------------------------------------------------------ */}
@@ -122,13 +121,14 @@ export function HeroSection() {
               </Link>
             </Button>
 
-            <Link
+            <a
               href={hero.secondaryCta.href}
-              className="inline-flex items-center gap-2 text-sm font-medium text-zinc-950 transition-colors hover:text-zinc-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm"
+              download={hero.secondaryCta.download ? true : undefined}
+              className="inline-flex items-center gap-2 rounded-sm text-sm font-medium text-zinc-950 transition-colors hover:text-zinc-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             >
-              <Mail className="h-4 w-4" aria-hidden="true" />
+              <Download className="h-4 w-4" aria-hidden="true" />
               {hero.secondaryCta.label}
-            </Link>
+            </a>
           </div>
 
           <dl className="mt-10 grid grid-cols-3 divide-x divide-zinc-200 overflow-hidden rounded-2xl border border-zinc-200 bg-white">
@@ -147,7 +147,16 @@ export function HeroSection() {
         {/* RIGHT — image panel                                                 */}
         {/* ------------------------------------------------------------------ */}
         <div className="hero-fade-in relative w-full lg:h-full lg:max-h-[min(38rem,calc(100dvh-8rem))] lg:justify-self-end">
-          <HeroImagePlaceholder className="aspect-[4/5] w-full min-h-0 sm:aspect-[3/4] lg:aspect-auto lg:h-full" />
+          {hero.image ? (
+            // eslint-disable-next-line @next/next/no-img-element -- remote Pexels URL from config
+            <img
+              src={hero.image}
+              alt={hero.imageAlt}
+              className="aspect-[4/5] h-full w-full min-h-0 rounded-[1.75rem] object-cover sm:aspect-[3/4] lg:aspect-auto"
+            />
+          ) : (
+            <HeroImagePlaceholder className="aspect-[4/5] w-full min-h-0 sm:aspect-[3/4] lg:aspect-auto lg:h-full" />
+          )}
         </div>
       </div>
     </section>

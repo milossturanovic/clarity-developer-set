@@ -40,6 +40,8 @@
     --input: 240 6% 90%;
     --ring: 240 6% 10%;
     --radius: 0.5rem;
+    /* Brand accent — active service titles, highlights */
+    --brand: 174 72% 41%;
   }
 }
 
@@ -82,5 +84,12 @@
 
   .hero-fade-in {
     animation: hero-fade-in 0.9s ease-out 0.12s both;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-fade-up,
+  .hero-fade-in {
+    animation: none;
   }
 }

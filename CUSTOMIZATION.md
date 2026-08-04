@@ -58,7 +58,8 @@ Under `siteConfig.hero`:
 | ----- | ------- |
 | `headlineSuffix` | Text after the name in the H1 |
 | `bio` | Supporting paragraph |
-| `primaryCta` / `secondaryCta` | Label + href for the two actions |
+| `primaryCta` / `secondaryCta` | Label + href (secondary defaults to resume PDF download) |
+| `image` / `imageAlt` | Hero panel image URL (Pexels or `/public`) and alt text |
 | `stats` | Three `{ label, value }` items in the meta bar |
 
 Component: `components/sections/hero-section.tsx`.
@@ -74,6 +75,17 @@ Under `siteConfig.disciplines`:
 | `items` | Rows: `{ title, description, tools: string[] }` |
 
 Component: `components/portfolio/disciplines-section.tsx`.
+
+### Services
+
+Under `siteConfig.services`:
+
+| Field | Purpose |
+| ----- | ------- |
+| `title` / `intro` | Heading and supporting copy |
+| `items` | `{ id, title, description, image?, imageTone }` |
+
+Hover/focus a list item to update the left preview and accent title. Component: `components/portfolio/services-section.tsx`.
 
 ### Case studies / technical work
 
