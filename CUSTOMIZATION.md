@@ -121,12 +121,40 @@ Helpers live in `lib/projects-data.ts` (types, published filter, SSG slugs, SVG 
 | --------------- | -------------------------------------------- |
 | `status`        | `"draft"` hides the project                  |
 | `featured`      | Marks projects for a future homepage strip   |
+| `label`         | Category pill and “Category” sidebar row     |
+| `year`          | Year shown on cards and rows                 |
+| `role`          | Your contribution, e.g. “Solo front end build” |
+| `deliverables`  | Ruled list on the `/projects` rows           |
+| `keyOutcome`    | Bold metric on homepage cards                |
+| `summary`       | One-sentence hero line on the case study     |
+| `caseStudy`     | Long-form body — see below                   |
 | `client`        | Shown on the detail page                     |
 | `duration`      | Shown on the detail page                     |
-| `websiteUrl`    | Live site button                             |
-| `githubUrl`     | GitHub button                                |
-| `highlights`    | Bullet list on the detail page               |
+| `websiteUrl`    | Live preview button                          |
+| `githubUrl`     | View source button                           |
+| `highlights`    | Fallback list when `deliverables` is missing |
 | `coverImage`    | Path under `/public` or a full URL           |
+
+### Case-study content
+
+`caseStudy` powers the long-form body on `/projects/[slug]`:
+
+```json
+"caseStudy": {
+  "intro": "Opening paragraph.",
+  "sections": [
+    { "title": "The challenge", "body": "..." },
+    { "title": "The approach", "body": "..." }
+  ]
+}
+```
+
+Add or rename sections freely — they render in order. Sidebar labels (Project info,
+Technologies, Related projects, share and next-project text) live in
+`config/site.ts` → `caseStudyPage`.
+
+Share links build their URL from `siteConfig.url`, so set that to your real domain
+before launch.
 
 ### Enums
 
@@ -142,19 +170,38 @@ Workflow: edit JSON → `npm run dev` → commit → push → host redeploys.
 | Route              | File                         | Notes                                      |
 | ------------------ | ---------------------------- | ------------------------------------------ |
 | `/`                | `app/page.tsx`               | Home — editorial hero section              |
-| `/projects`        | `app/projects/page.tsx`      | Simple list from JSON                      |
-| `/projects/[slug]` | `app/projects/[slug]/page.tsx` | Detail shell + `generateStaticParams`    |
-| `/contact`         | `app/contact/page.tsx`       | Info from config + form stub               |
+| `/projects`        | `app/projects/page.tsx`      | Alternating selected-work rows             |
+| `/projects/[slug]` | `app/projects/[slug]/page.tsx` | Case study + `generateStaticParams`      |
+| `/contact`         | `app/contact/page.tsx`       | Channels, availability + message form      |
 
 Stubs are valid and accessible. Labels like “replace with your design” mark what to redesign.
 
 ---
 
-## Contact form
+## Contact page
 
-**File:** `components/contact-form.tsx`
+**Files:** `app/contact/page.tsx` (server) and `components/contact-form.tsx` (client)
 
-UI-only: `preventDefault` on submit. To go live, connect a provider (Formspree, Getform, Resend + API route, etc.) inside `handleSubmit` or via a form `action` URL.
+All copy lives in `config/site.ts` → `contactPage`:
+
+| Field              | Purpose                                               |
+| ------------------ | ----------------------------------------------------- |
+| `title` / `intro`  | Page heading and opening paragraph                    |
+| `channels`         | The stacked cards (email, response time, availability, location) |
+| `openTo`           | Ruled list of the work you want to be contacted about |
+| `form`             | Labels, project types, consent line, success message  |
+
+Each channel takes an `icon` key: `"mail"`, `"clock"`, `"calendar"`, `"map"`,
+`"github"`, or `"linkedin"`. Add an `href` to make the value a link, or omit it
+for plain text.
+
+### Wiring the form
+
+The form validates in the browser and shows a success panel, but nothing is sent
+by default. Replace the body of `sendInquiry` in `components/contact-form.tsx`
+with your provider (Formspree, Getform, Resend + a route handler, ...), then
+delete `contactPage.form.stubNote` from `config/site.ts` to remove the demo
+notice under the button.
 
 Do not add a database, Prisma, or admin dashboard for the default product.
 
@@ -163,7 +210,7 @@ Do not add a database, Prisma, or admin dashboard for the default product.
 ## Navigation & footer
 
 - **Navbar:** `components/site-navbar.tsx` — reads `siteConfig.navItems` and `siteConfig.name`
-- **Footer:** `components/site-footer.tsx` — social icons from `siteConfig.links` only
+- **Footer:** `components/site-footer.tsx` — global (root layout). Blurb + availability from `siteConfig.footer`; socials from `siteConfig.links` (X, LinkedIn, Instagram, GitHub); email from `contact.email`
 
 Edit config first; only change these components when designing a new layout.
 

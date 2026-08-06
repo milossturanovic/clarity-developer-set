@@ -9,6 +9,10 @@
     "label",
     "year",
     "keyOutcome",
+    "role",
+    "deliverables",
+    "summary",
+    "caseStudy",
     "completionDate",
     "client",
     "duration",
@@ -32,14 +36,43 @@
       "featured": true,
       "title": "Northside Café",
       "label": "Landing page",
+      "role": "Solo front end build",
       "year": "2025",
-      "description": "A responsive marketing page for a fictional neighborhood café — menu highlights, hours, and a simple contact section.",
+      "description": "Constraint: ship a mobile-first marketing page in one week with no design system. Built a clear hierarchy for menu, hours, and contact so a small café could look intentional on every screen size.",
       "keyOutcome": "Mobile-first layout",
       "category": "creative",
       "tech": ["nextjs", "react"],
       "tags": ["Next.js", "Tailwind", "Responsive"],
+      "deliverables": [
+        "Responsive page layout",
+        "Section components",
+        "Tailwind styling",
+        "Contact form UI"
+      ],
+      "summary": "A mobile-first marketing page for a neighbourhood café, built in one week with a focus on clear hierarchy and fast loading.",
+      "caseStudy": {
+        "intro": "Northside Café had a one-page site that hadn’t been touched in years — menu as a PDF, hours buried at the bottom, and nothing that worked properly on a phone. I rebuilt it as a single Next.js page with a structure that puts the three things customers actually look for right up front.",
+        "sections": [
+          {
+            "title": "The challenge",
+            "body": "The café had no brand guidelines, no photography budget, and needed the page live before a weekend opening. I had to make design decisions quickly and keep the build simple enough that the owner could update the menu without me."
+          },
+          {
+            "title": "The approach",
+            "body": "I started on paper with a mobile layout: hero, menu, hours and location, then contact. Once the order made sense on a small screen, I scaled it up with Tailwind breakpoints instead of designing desktop-first and squeezing it down."
+          },
+          {
+            "title": "Key details",
+            "body": "The menu is a simple data file rendered into ruled sections, so adding a drink is a one-line change. Hours and address sit in a single card that doubles as the map link, and every image is sized and lazy-loaded to keep the page quick on mobile data."
+          },
+          {
+            "title": "What I learned",
+            "body": "Typography and spacing carry most of the polish. Cutting the number of font sizes down to four and sticking to one spacing scale made the page look intentional far more than any effect would have."
+          }
+        ]
+      },
       "completed": "2025",
-      "completionDate": "2025",
+      "completionDate": "March 2025",
       "client": "Personal",
       "duration": "1 week",
       "coverImage": "https://images.pexels.com/photos/302899/pexels-photo-302899.jpeg?auto=compress&cs=tinysrgb&w=1000",
@@ -57,14 +90,43 @@
       "featured": true,
       "title": "Weather dashboard",
       "label": "API practice",
+      "role": "Front end + data fetching",
       "year": "2025",
-      "description": "Practiced fetching live data, loading states, and error handling with a public weather API.",
+      "description": "Constraint: a free public API with rate limits and messy edge cases. Focused on clear loading, empty, and error states so searching a city felt dependable instead of fragile.",
       "keyOutcome": "City search + 5-day view",
       "category": "corporate",
       "tech": ["react", "nextjs"],
       "tags": ["React", "Fetch API", "CSS"],
+      "deliverables": [
+        "City search UI",
+        "Fetch + loading states",
+        "Error handling",
+        "5-day forecast view"
+      ],
+      "summary": "A city weather dashboard built to practise data fetching, with loading, empty, and error states treated as part of the design.",
+      "caseStudy": {
+        "intro": "Most weather tutorials stop at “it renders when the request succeeds.” I wanted to build the version that still feels solid when the API is slow, the city doesn’t exist, or the rate limit kicks in — because that’s where a real interface earns trust.",
+        "sections": [
+          {
+            "title": "The challenge",
+            "body": "The free tier of the API rate-limits aggressively and returns inconsistent shapes for edge cases. Searching “Springfield” gives you a dozen results in different countries, and a typo returns a 404 rather than an empty list."
+          },
+          {
+            "title": "The approach",
+            "body": "I mapped every state the screen could be in before writing the fetch logic: idle, loading, success, empty, and error. Each one got its own layout so the page never jumps between a spinner and a wall of text, and the search box keeps its value after a failed request."
+          },
+          {
+            "title": "Key details",
+            "body": "Skeleton blocks match the size of the real cards so nothing shifts when data lands. Errors are written in plain language with a retry action, and the five-day forecast collapses into a scrollable row on mobile instead of shrinking into unreadable columns."
+          },
+          {
+            "title": "What I learned",
+            "body": "Handling failure well is mostly a layout problem, not a logic problem. Once each state had a designed home, the data-fetching code got noticeably simpler because it no longer tried to do two jobs at once."
+          }
+        ]
+      },
       "completed": "2025",
-      "completionDate": "2025",
+      "completionDate": "January 2025",
       "client": "Personal",
       "duration": "1 week",
       "coverImage": "https://images.pexels.com/photos/1118873/pexels-photo-1118873.jpeg?auto=compress&cs=tinysrgb&w=1000",
@@ -82,14 +144,43 @@
       "featured": true,
       "title": "Task board",
       "label": "CRUD UI",
+      "role": "React state practice",
       "year": "2024",
-      "description": "A simple kanban-style board to practice state, forms, and keeping the UI in sync with local data.",
+      "description": "Constraint: no backend — everything lived in local state. Built add, edit, and filter flows with labeled controls and keyboard-friendly interactions so the board stayed usable as tasks piled up.",
       "keyOutcome": "Add, edit, and filter tasks",
       "category": "corporate",
       "tech": ["react"],
       "tags": ["React", "TypeScript", "Local state"],
+      "deliverables": [
+        "Task CRUD flows",
+        "Filter controls",
+        "Form validation",
+        "Accessibility basics"
+      ],
+      "summary": "A keyboard-friendly task board with no backend — every add, edit, and filter flow lives in local React state.",
+      "caseStudy": {
+        "intro": "I built this to get comfortable with React state before reaching for a library. Everything lives in local state, which forced me to be deliberate about where data belongs and made the accessibility work impossible to skip.",
+        "sections": [
+          {
+            "title": "The challenge",
+            "body": "Without a backend, the board had to stay usable as tasks piled up — and stay predictable when a task moved between columns, got edited mid-filter, or was deleted while a form was open."
+          },
+          {
+            "title": "The approach",
+            "body": "I kept the task list in one place and passed handlers down rather than duplicating state per column. Controlled forms with real validation meant every change went through the same path, which made bugs much easier to trace."
+          },
+          {
+            "title": "Key details",
+            "body": "Every control has a visible label and a focus ring, actions can be reached with the keyboard alone, and empty columns explain what to do instead of showing a blank box. Filters live in the URL-free local state but reset cleanly when the board changes."
+          },
+          {
+            "title": "What I learned",
+            "body": "Lifting state up early saved me a rewrite later. I also learned that accessibility basics — labels, focus order, and clear empty states — are much cheaper to build in from the start than to bolt on at the end."
+          }
+        ]
+      },
       "completed": "2024",
-      "completionDate": "2024",
+      "completionDate": "November 2024",
       "client": "Personal",
       "duration": "10 days",
       "coverImage": "https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=1000",

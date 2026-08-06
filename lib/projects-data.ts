@@ -47,6 +47,19 @@ export type JsonProject = {
   year?: string
   /** Bold metric on homepage case-study cards, e.g. "+28% activation". */
   keyOutcome?: string
+  /** Role / contribution shown on the projects page, e.g. "Solo front end build". */
+  role?: string
+  /** Ruled list on the projects page alternating rows. */
+  deliverables?: string[]
+  /** One-sentence hero summary on the case-study page. Defaults to `description`. */
+  summary?: string
+  /** Long-form case-study body on /projects/[slug]. */
+  caseStudy?: {
+    /** Opening paragraph before the titled sections. */
+    intro?: string
+    /** Titled sections, e.g. "The challenge", "Approach", "Results". */
+    sections?: { title: string; body: string }[]
+  }
   /** Short completion label, e.g. "Oct 2024". */
   completed: string
   /** Long completion label, e.g. "October 2024". Defaults to `completed`. */
@@ -312,6 +325,137 @@ export async function getCaseStudyCards(limit = 3): Promise<CaseStudyCard[]> {
     /** Buyer cover under /public or URL; empty → editorial placeholder in the UI. */
     image: p.coverImage?.trim() || "",
   }))
+}
+
+/** Rich row shape for the /projects alternating work layout. */
+export type SelectedWorkProject = {
+  id: string
+  slug: string
+  title: string
+  year: string
+  label: string
+  role: string
+  description: string
+  deliverables: string[]
+  image: string
+}
+
+export async function getSelectedWorkProjects(): Promise<SelectedWorkProject[]> {
+  const published = await getPublishedJsonProjects()
+  return published.map((p) => ({
+    id: p.id,
+    slug: p.slug,
+    title: p.title,
+    year: p.year?.trim() || p.completed,
+    label: p.label?.trim() || techLabel(p.tech[0] ?? "react"),
+    role: p.role?.trim() || "Front end",
+    description: p.description,
+    deliverables:
+      p.deliverables?.filter((d) => d.trim().length > 0) ??
+      p.highlights?.filter((h) => h.trim().length > 0) ??
+      [],
+    image:
+      p.coverImage?.trim() ||
+      makeScreenshot(p.title, accentForCategory(p.category)),
+  }))
+}
+
+// ---------------------------------------------------------------------------
+// CASE STUDY PAGE (/projects/[slug])
+// ---------------------------------------------------------------------------
+
+/** Small thumbnail card used by the "Related projects" sidebar. */
+export type RelatedProjectCard = {
+  slug: string
+  title: string
+  year: string
+  image: string
+}
+
+/** Everything the /projects/[slug] case-study layout renders. */
+export type CaseStudyPageData = {
+  slug: string
+  title: string
+  /** Category pill + sidebar "Category" value, e.g. "Landing page". */
+  label: string
+  /** Short sentence under the title. */
+  summary: string
+  heroImage: string
+  /** Sidebar rows: Client, Date, Role, Category. */
+  meta: { label: string; value: string }[]
+  /** Opening paragraph of the long-form body. */
+  intro: string
+  sections: { title: string; body: string }[]
+  technologies: string[]
+  websiteUrl?: string
+  githubUrl?: string
+  related: RelatedProjectCard[]
+  next?: { slug: string; title: string }
+}
+
+function toRelatedCard(p: JsonProject): RelatedProjectCard {
+  return {
+    slug: p.slug,
+    title: p.title,
+    year: p.year?.trim() || p.completed,
+    image:
+      p.coverImage?.trim() ||
+      makeScreenshot(p.title, accentForCategory(p.category)),
+  }
+}
+
+/**
+ * Builds the case-study payload for one slug, plus the sibling projects used by
+ * the "Related projects" sidebar and the next-project footer link.
+ */
+export async function getProjectCaseStudy(
+  slug: string,
+  relatedLimit = 3
+): Promise<CaseStudyPageData | undefined> {
+  const published = await getPublishedJsonProjects()
+  const index = published.findIndex((p) => p.slug === slug)
+  if (index === -1) return undefined
+
+  const p = published[index]
+  const label = p.label?.trim() || techLabel(p.tech[0] ?? "react")
+  const role = p.role?.trim() || "Front end"
+  const others = published.filter((other) => other.slug !== slug)
+  const nextProject = published[(index + 1) % published.length]
+
+  const meta = [
+    { label: "Client", value: p.client?.trim() || "Personal project" },
+    { label: "Date", value: p.completionDate?.trim() || p.completed },
+    { label: "Role", value: role },
+    { label: "Category", value: label },
+  ]
+  if (p.duration?.trim()) {
+    meta.push({ label: "Timeline", value: p.duration.trim() })
+  }
+
+  return {
+    slug: p.slug,
+    title: p.title,
+    label,
+    summary: p.summary?.trim() || p.description,
+    heroImage:
+      p.screenshots?.homepage?.trim() ||
+      p.coverImage?.trim() ||
+      makeScreenshot(`${p.title} — preview`, accentForCategory(p.category)),
+    meta,
+    intro: p.caseStudy?.intro?.trim() || p.description,
+    sections:
+      p.caseStudy?.sections?.filter(
+        (s) => s.title.trim().length > 0 && s.body.trim().length > 0
+      ) ?? [],
+    technologies: p.tags?.length ? p.tags : p.tech.map(techLabel),
+    websiteUrl: p.websiteUrl?.trim() || undefined,
+    githubUrl: p.githubUrl?.trim() || undefined,
+    related: others.slice(0, relatedLimit).map(toRelatedCard),
+    next:
+      nextProject && nextProject.slug !== slug
+        ? { slug: nextProject.slug, title: nextProject.title }
+        : undefined,
+  }
 }
 
 export async function getFeaturedProjects(

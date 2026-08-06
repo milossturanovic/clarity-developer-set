@@ -11,12 +11,16 @@
  * DEVELOPER EDIT NOTES:
  *   1. Update name, shortName, role, description, and url to match your profile.
  *   2. Set contact.location and contact.email.
- *   3. Replace links.github, links.linkedin, and links.email with your URLs.
- *   4. Edit hero.headlineSuffix, hero.bio, hero CTAs, and hero.stats for the home page.
- *   5. Edit disciplines.title, disciplines.intro, and disciplines.items for the skills section.
- *   6. Edit caseStudies.title and caseStudies.intro; card content lives in data/projects.json.
- *   7. Edit services.title, services.intro, and services.items.
- *   8. Add or remove navItems as needed (href should match a real route).
+ *   3. Replace links.github, links.linkedin, links.twitter, links.instagram, and links.email.
+ *   4. Edit footer.blurb and footer.availability for the global footer.
+ *   5. Edit hero.headlineSuffix, hero.bio, hero CTAs, and hero.stats for the home page.
+ *   6. Edit disciplines.title, disciplines.intro, and disciplines.items for the skills section.
+ *   7. Edit caseStudies.title and caseStudies.intro; card content lives in data/projects.json.
+ *   8. Edit projectsPage.title / intro / ctaLabel for the /projects alternating rows.
+ *   9. Edit caseStudyPage labels for the /projects/[slug] detail page.
+ *  10. Edit contactPage channels, openTo items, and form copy.
+ *  11. Edit services.title, services.intro, and services.items.
+ *  12. Add or remove navItems as needed (href should match a real route).
  *
  * ============================================================================
  */
@@ -54,7 +58,20 @@ export const siteConfig = {
     github: "https://github.com/yourusername",
     linkedin: "https://linkedin.com/in/yourusername",
     twitter: "https://twitter.com/yourusername",
+    instagram: "https://instagram.com/yourusername",
     email: "mailto:john.doe@example.com",
+  },
+
+  // ---------------------------------------------------------------------------
+  // FOOTER — global (root layout)
+  // ---------------------------------------------------------------------------
+  footer: {
+    blurb:
+      "Front end developer, building clean interfaces and learning in public from the United States.",
+    availability: {
+      label: "Available",
+      detail: "Open to junior roles and internship opportunities",
+    },
   },
 
   // ---------------------------------------------------------------------------
@@ -75,9 +92,8 @@ export const siteConfig = {
       download: true,
     },
     /** Remote or /public image for the hero panel. Leave empty for the placeholder. */
-    image:
-      "https://images.pexels.com/photos/37862666/pexels-photo-37862666.jpeg?auto=compress&cs=tinysrgb&w=1200",
-    imageAlt: "Confident businessman in an office with a laptop",
+    image: "/hero.png",
+    imageAlt: "Portrait of a developer at a desk with a laptop",
     stats: [
       { label: "Discipline", value: "Front end" },
       { label: "Experience", value: "Starting out" },
@@ -128,6 +144,99 @@ export const siteConfig = {
     intro:
       "A few builds from my learning path — each one focused on a concrete skill, not a made-up client metric.",
     ctaLabel: "View project",
+  },
+
+  // ---------------------------------------------------------------------------
+  // PROJECTS PAGE — alternating selected-work rows
+  // ---------------------------------------------------------------------------
+  projectsPage: {
+    title: "Selected projects",
+    intro:
+      "Three projects from the last two years. Each started with a real constraint and ended with a shipped product.",
+    ctaLabel: "Read case study",
+  },
+
+  // ---------------------------------------------------------------------------
+  // CASE STUDY PAGE — labels for /projects/[slug] (content from data/projects.json)
+  // ---------------------------------------------------------------------------
+  caseStudyPage: {
+    backLabel: "All projects",
+    infoTitle: "Project info",
+    technologiesTitle: "Technologies",
+    relatedTitle: "Related projects",
+    livePreviewLabel: "View live preview",
+    sourceLabel: "View source",
+    shareLabel: "Share this project",
+    nextLabel: "Next project",
+  },
+
+  // ---------------------------------------------------------------------------
+  // CONTACT PAGE — /contact
+  //
+  // `channels[].icon` accepts: "mail" | "clock" | "calendar" | "map" | "github"
+  // | "linkedin". Set `href` to make a channel clickable (omit for plain text).
+  // ---------------------------------------------------------------------------
+  contactPage: {
+    title: "Let’s build something",
+    intro:
+      "I’m always up for a conversation about front end work — whether it’s a role, a small build, or a project you’d like a second pair of hands on.",
+    channels: [
+      {
+        icon: "mail",
+        title: "Email",
+        description: "The most reliable way to reach me",
+        value: "john.doe@example.com",
+        href: "mailto:john.doe@example.com",
+      },
+      {
+        icon: "clock",
+        title: "Response time",
+        description: "I read and reply to every message",
+        value: "Usually within 1–2 days",
+      },
+      {
+        icon: "calendar",
+        title: "Availability",
+        description: "Open to junior roles and internships",
+        value: "Taking on new work",
+      },
+      {
+        icon: "map",
+        title: "Where I work",
+        description: "Remote-friendly, happy to overlap with your hours",
+        value: "United States",
+      },
+    ],
+    openTo: {
+      title: "What I’m open to",
+      items: [
+        "Junior front end or internship roles",
+        "Freelance landing pages and marketing sites",
+        "Small React and Next.js builds",
+        "Pairing on an open-source issue",
+      ],
+    },
+    form: {
+      title: "Send a message",
+      intro:
+        "Tell me a little about what you’re working on and I’ll get back to you within a couple of days.",
+      projectTypeLabel: "What’s this about?",
+      projectTypes: [
+        "A role or internship",
+        "Freelance project",
+        "Collaboration",
+        "Something else",
+      ],
+      consentLabel: "I’m happy for you to reply to me by email.",
+      submitLabel: "Send message",
+      submittingLabel: "Sending…",
+      successTitle: "Thanks for reaching out",
+      successMessage:
+        "Your message is on its way. I’ll get back to you within a couple of days.",
+      /** Shown under the button while the form is still a UI-only stub. Delete once wired. */
+      stubNote:
+        "Demo form — connect a provider in components/contact-form.tsx before launch.",
+    },
   },
 
   // ---------------------------------------------------------------------------
