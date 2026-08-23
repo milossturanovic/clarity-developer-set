@@ -30,7 +30,7 @@ export function SiteNavbar() {
       <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-6 sm:px-8">
         <Link
           href="/"
-          className="rounded-sm text-sm font-semibold tracking-tight text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+          className="rounded-sm text-xl font-semibold tracking-tight text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
         >
           {siteConfig.name}
         </Link>

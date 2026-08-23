@@ -1,6 +1,6 @@
 # Clarity Developer Set
 
-A light minimal developer portfolio **shell** built with Next.js 14, TypeScript, Tailwind CSS, and shadcn/ui. Ready for you (or your designer) to build unique sections on top of a standards-compliant foundation.
+A light, minimal developer portfolio template built with Next.js 14, TypeScript, Tailwind CSS, and shadcn/ui. Designed pages are included — edit content in config and JSON, then deploy.
 
 ![Next.js](https://img.shields.io/badge/Next.js-14-black?style=flat-square&logo=next.js)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?style=flat-square&logo=typescript)
@@ -11,9 +11,12 @@ A light minimal developer portfolio **shell** built with Next.js 14, TypeScript,
 ## What's inside
 
 - **Routes**: Home (`/`), `/projects`, `/projects/[slug]`, `/contact`
-- **Shell UI**: Minimal navbar + footer wired to `config/site.ts`
-- **Home hero**: Editorial two-column layout (copy + stats + image panel)
-- **Content workflow**: Projects from `data/projects.json` only
+- **Home sections**: Hero, Services, Disciplines, Case studies
+- **Projects page**: Alternating selected-work rows with deliverables and case-study links
+- **Case study pages**: Long-form detail with sidebar, technologies, related projects, and next-project nav
+- **Contact page**: Channels, availability, and a message form (UI-only until you wire a provider)
+- **Global chrome**: Navbar + footer from `config/site.ts`
+- **Content workflow**: Branding in `config/site.ts`, projects in `data/projects.json`
 - **No backend, no database, no env vars required**
 
 ---
@@ -36,10 +39,11 @@ npm run start
 
 ## How to edit your portfolio
 
-1. **Edit `config/site.ts`** — name, role, email, social links, nav
-2. **Edit `data/projects.json`** — add, edit, or remove projects
-3. **Run `npm run dev`** to preview
-4. **`git commit` and `git push`** — your host redeploys
+1. **Edit `config/site.ts`** — name, role, email, social links, nav, section copy
+2. **Edit `data/projects.json`** — add, edit, or remove projects and case-study content
+3. **Swap images in `public/`** — hero, service previews, optional resume PDF
+4. **Run `npm run dev`** to preview
+5. **`git commit` and `git push`** — your host redeploys
 
 No CMS, no database, no admin login.
 
@@ -47,7 +51,7 @@ No CMS, no database, no admin login.
 
 Required: `id`, `slug`, `title`, `description`, `category`, `tech`, `completed`.
 
-Optional: `featured`, `status`, `client`, `duration`, `completionDate`, `websiteUrl`, `githubUrl`, `tags`, `highlights`, `impact`, `coverImage`, `screenshots`.
+Optional: `featured`, `status`, `label`, `year`, `role`, `deliverables`, `keyOutcome`, `summary`, `caseStudy`, `client`, `duration`, `completionDate`, `websiteUrl`, `githubUrl`, `tags`, `highlights`, `impact`, `coverImage`, `screenshots`.
 
 Enums:
 
@@ -61,16 +65,24 @@ Full schema: top of `lib/projects-data.ts`.
 
 ## Where to edit
 
-| What you want to change        | File                          |
-| ------------------------------ | ----------------------------- |
-| Site name, role, email, social | `config/site.ts`              |
-| Page title & meta description  | `config/site.ts` (via layout) |
-| Projects (every page)          | `data/projects.json`          |
-| Hero headline, bio, CTAs, stats | `config/site.ts` → `hero`    |
-| Hero layout                     | `components/sections/hero-section.tsx` |
-| Contact form stub              | `components/contact-form.tsx` |
-| Theme colors                   | `app/globals.css`             |
-| New homepage sections          | `components/sections/`        |
+| What you want to change | File |
+| ----------------------- | ---- |
+| Site name, role, email, social | `config/site.ts` |
+| Page title & meta description | `config/site.ts` (via layout) |
+| Footer blurb & availability | `config/site.ts` → `footer` |
+| Hero headline, bio, CTAs, stats, image | `config/site.ts` → `hero` |
+| Services list & preview images | `config/site.ts` → `services` |
+| Disciplines / skills | `config/site.ts` → `disciplines` |
+| Case studies section title & intro | `config/site.ts` → `caseStudies` |
+| Projects page title & intro | `config/site.ts` → `projectsPage` |
+| Case study page labels | `config/site.ts` → `caseStudyPage` |
+| Contact channels, open-to list, form copy | `config/site.ts` → `contactPage` |
+| Projects (every page) | `data/projects.json` |
+| Hero image | `public/hero.png` |
+| Service preview images | `public/services/` |
+| Resume download (`hero.secondaryCta`) | `public/resume.pdf` |
+| Contact form wiring | `components/contact-form.tsx` |
+| Theme colors | `app/globals.css` |
 
 See `CUSTOMIZATION.md` for details.
 
@@ -83,35 +95,48 @@ clarity-developer-set/
 ├── app/
 │   ├── globals.css
 │   ├── layout.tsx
-│   ├── page.tsx                 # home → HeroSection
+│   ├── page.tsx                 # home → hero, services, disciplines, case studies
 │   ├── contact/page.tsx
 │   └── projects/
-│       ├── page.tsx
-│       └── [slug]/page.tsx
+│       ├── page.tsx             # selected-work rows
+│       └── [slug]/page.tsx      # case study detail
 ├── components/
 │   ├── site-navbar.tsx
 │   ├── site-footer.tsx
 │   ├── contact-form.tsx
 │   ├── sections/
 │   │   └── hero-section.tsx
+│   ├── portfolio/
+│   │   ├── services-section.tsx
+│   │   ├── disciplines-section.tsx
+│   │   ├── case-studies-section.tsx
+│   │   ├── selected-projects-section.tsx
+│   │   └── project-case-study.tsx
 │   └── ui/                      # shadcn primitives
 ├── config/site.ts
 ├── data/projects.json
 ├── lib/projects-data.ts
 └── public/
+    ├── hero.png
+    ├── resume.pdf               # add your PDF (optional)
+    └── services/
+        ├── responsive-layouts.png
+        ├── react-interfaces.png
+        ├── landing-pages.png
+        └── ui-polish.png
 ```
 
 ---
 
 ## Documentation
 
-| File                         | Purpose                          |
-| ---------------------------- | -------------------------------- |
-| `QUICK-START.md`             | 15-minute setup checklist        |
-| `CUSTOMIZATION.md`           | Edit paths for the shell         |
-| `DEPLOYMENT.md`              | Vercel-first deploy guide        |
-| `AI_CUSTOMIZATION_PROMPT.md` | Copy-paste AI prompt             |
-| `LICENSE.md`                 | Terms + Git hosting exception    |
+| File | Purpose |
+| ---- | ------- |
+| `QUICK-START.md` | 15-minute setup checklist |
+| `CUSTOMIZATION.md` | File-by-file edit guide |
+| `DEPLOYMENT.md` | Vercel-first deploy guide |
+| `AI_CUSTOMIZATION_PROMPT.md` | Copy-paste AI prompt |
+| `LICENSE.md` | Terms + Git hosting exception |
 
 ---
 

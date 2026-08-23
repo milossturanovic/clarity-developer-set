@@ -207,20 +207,31 @@ function hrefFromLinks(p: JsonProject): ListProjectCard["href"] {
 // ---------------------------------------------------------------------------
 
 export const loadJsonProjects = cache(async (): Promise<JsonProject[]> => {
+  let raw: string
   try {
-    const raw = await readFile(DATA_PATH, "utf8")
-    const parsed = JSON.parse(raw) as { projects?: JsonProject[] }
-    if (!parsed.projects || !Array.isArray(parsed.projects)) {
-      console.error(
-        '[projects-data] data/projects.json must contain a { "projects": [...] } array.'
-      )
-      return []
-    }
-    return parsed.projects
+    raw = await readFile(DATA_PATH, "utf8")
   } catch (error) {
-    console.error("[projects-data] failed to read data/projects.json:", error)
-    return []
+    throw new Error(
+      `[projects-data] Could not read data/projects.json. Ensure the file exists at the project root.\n${String(error)}`
+    )
   }
+
+  let parsed: { projects?: JsonProject[] }
+  try {
+    parsed = JSON.parse(raw) as { projects?: JsonProject[] }
+  } catch (error) {
+    throw new Error(
+      `[projects-data] data/projects.json is not valid JSON.\n${String(error)}`
+    )
+  }
+
+  if (!parsed.projects || !Array.isArray(parsed.projects)) {
+    throw new Error(
+      '[projects-data] data/projects.json must contain a { "projects": [...] } array.'
+    )
+  }
+
+  return parsed.projects
 })
 
 export async function getPublishedJsonProjects(): Promise<JsonProject[]> {

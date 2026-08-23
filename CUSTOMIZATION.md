@@ -1,19 +1,20 @@
 # Customization Guide
 
-How to personalize the Clarity Developer Set shell.
+How to personalize the Clarity Developer Set portfolio template.
 
 ## Table of contents
 
 1. [Site configuration](#site-configuration)
 2. [Projects (JSON workflow)](#projects-json-workflow)
-3. [Route stubs](#route-stubs)
-4. [Contact form](#contact-form)
+3. [Pages](#pages)
+4. [Contact page](#contact-page)
 5. [Navigation & footer](#navigation--footer)
-6. [Colors & theme](#colors--theme)
-7. [Typography](#typography)
-8. [Adding sections (design phase)](#adding-sections-design-phase)
-9. [Adding a new page](#adding-a-new-page)
-10. [Tips](#tips)
+6. [Images](#images)
+7. [Colors & theme](#colors--theme)
+8. [Typography](#typography)
+9. [Adding a new section](#adding-a-new-section)
+10. [Adding a new page](#adding-a-new-page)
+11. [Tips](#tips)
 
 ---
 
@@ -21,7 +22,7 @@ How to personalize the Clarity Developer Set shell.
 
 **File:** `config/site.ts`
 
-Central config for brand, nav, contact, social links, and hero copy.
+Central config for brand, nav, contact, social links, and all section copy.
 
 ```typescript
 export const siteConfig = {
@@ -43,63 +44,75 @@ export const siteConfig = {
     github: "https://github.com/yourusername",
     linkedin: "https://linkedin.com/in/yourusername",
     twitter: "https://twitter.com/yourusername",
+    instagram: "https://instagram.com/yourusername",
     email: "mailto:john.doe@example.com",
   },
 }
 ```
 
-Consumed by: `site-navbar`, `site-footer`, contact page, home hero, and `app/layout.tsx` metadata. Do not duplicate URLs elsewhere.
+Also edit these blocks in the same file:
 
-### Hero copy
+| Block | Used by |
+| ----- | ------- |
+| `footer` | Global footer blurb + availability |
+| `hero` | Home hero |
+| `disciplines` | Skills section |
+| `services` | Services preview list |
+| `caseStudies` | Homepage project cards title/intro/CTA |
+| `projectsPage` | `/projects` title, intro, row CTA |
+| `caseStudyPage` | Labels on `/projects/[slug]` |
+| `contactPage` | Channels, open-to list, form copy |
 
-Under `siteConfig.hero`:
+Consumed by navbar, footer, contact, home sections, and `app/layout.tsx` metadata. Do not duplicate URLs elsewhere.
+
+### Hero
 
 | Field | Purpose |
 | ----- | ------- |
 | `headlineSuffix` | Text after the name in the H1 |
 | `bio` | Supporting paragraph |
-| `primaryCta` / `secondaryCta` | Label + href (secondary defaults to resume PDF download) |
-| `image` / `imageAlt` | Hero panel image URL (Pexels or `/public`) and alt text |
-| `stats` | Three `{ label, value }` items in the meta bar |
+| `primaryCta` / `secondaryCta` | Label + href (secondary defaults to `/resume.pdf`) |
+| `image` / `imageAlt` | Hero panel path under `/public` (or remote URL) and alt text |
+| `stats` | Three `{ label, value }` items |
 
 Component: `components/sections/hero-section.tsx`.
 
 ### Disciplines / skills
 
-Under `siteConfig.disciplines`:
-
 | Field | Purpose |
 | ----- | ------- |
-| `title` | Section heading |
-| `intro` | Supporting paragraph |
+| `title` / `intro` | Section heading and supporting copy |
 | `items` | Rows: `{ title, description, tools: string[] }` |
 
 Component: `components/portfolio/disciplines-section.tsx`.
 
 ### Services
 
-Under `siteConfig.services`:
-
 | Field | Purpose |
 | ----- | ------- |
 | `title` / `intro` | Heading and supporting copy |
 | `items` | `{ id, title, description, image?, imageTone }` |
 
-Hover/focus a list item to update the left preview and accent title. Component: `components/portfolio/services-section.tsx`.
+Hover/focus a list item to update the left preview. Component: `components/portfolio/services-section.tsx`.
 
-### Case studies / technical work
-
-Under `siteConfig.caseStudies`:
+### Case studies (homepage cards)
 
 | Field | Purpose |
 | ----- | ------- |
-| `title` | Section heading |
-| `intro` | Supporting paragraph |
-| `ctaLabel` | Card link text (default “Read case study”) |
+| `title` / `intro` | Section heading and supporting copy |
+| `ctaLabel` | Card link text |
 
 Card content comes from **featured** projects in `data/projects.json`. Useful fields: `label`, `year`, `keyOutcome`, `description`, `coverImage`, `tags`.
 
 Component: `components/portfolio/case-studies-section.tsx`.
+
+### Projects page
+
+Under `siteConfig.projectsPage`: title, intro, and `ctaLabel` for the alternating rows on `/projects`.
+
+### Case study page labels
+
+Under `siteConfig.caseStudyPage`: sidebar headings, live/source button labels, share label, next-project label.
 
 ---
 
@@ -109,7 +122,9 @@ All projects read from one file:
 
 **File:** `data/projects.json`
 
-Helpers live in `lib/projects-data.ts` (types, published filter, SSG slugs, SVG placeholders).
+Helpers live in `lib/projects-data.ts` (types, published filter, SSG slugs, placeholders).
+
+If this file is missing or invalid JSON, **`npm run build` fails** so you catch it before deploy.
 
 ### Required fields
 
@@ -120,8 +135,8 @@ Helpers live in `lib/projects-data.ts` (types, published filter, SSG slugs, SVG 
 | Field           | Purpose                                      |
 | --------------- | -------------------------------------------- |
 | `status`        | `"draft"` hides the project                  |
-| `featured`      | Marks projects for a future homepage strip   |
-| `label`         | Category pill and “Category” sidebar row     |
+| `featured`      | Shows on the homepage case-studies grid      |
+| `label`         | Category pill and sidebar “Category”         |
 | `year`          | Year shown on cards and rows                 |
 | `role`          | Your contribution, e.g. “Solo front end build” |
 | `deliverables`  | Ruled list on the `/projects` rows           |
@@ -149,12 +164,9 @@ Helpers live in `lib/projects-data.ts` (types, published filter, SSG slugs, SVG 
 }
 ```
 
-Add or rename sections freely — they render in order. Sidebar labels (Project info,
-Technologies, Related projects, share and next-project text) live in
-`config/site.ts` → `caseStudyPage`.
+Add or rename sections freely — they render in order.
 
-Share links build their URL from `siteConfig.url`, so set that to your real domain
-before launch.
+Share links use `siteConfig.url`, so set that to your real domain before launch.
 
 ### Enums
 
@@ -165,16 +177,16 @@ Workflow: edit JSON → `npm run dev` → commit → push → host redeploys.
 
 ---
 
-## Route stubs
+## Pages
 
-| Route              | File                         | Notes                                      |
-| ------------------ | ---------------------------- | ------------------------------------------ |
-| `/`                | `app/page.tsx`               | Home — editorial hero section              |
-| `/projects`        | `app/projects/page.tsx`      | Alternating selected-work rows             |
-| `/projects/[slug]` | `app/projects/[slug]/page.tsx` | Case study + `generateStaticParams`      |
-| `/contact`         | `app/contact/page.tsx`       | Channels, availability + message form      |
+Designed routes (no stubs to replace):
 
-Stubs are valid and accessible. Labels like “replace with your design” mark what to redesign.
+| Route              | File                           | Notes                                      |
+| ------------------ | ------------------------------ | ------------------------------------------ |
+| `/`                | `app/page.tsx`                 | Hero → Services → Disciplines → Case studies |
+| `/projects`        | `app/projects/page.tsx`        | Alternating selected-work rows             |
+| `/projects/[slug]` | `app/projects/[slug]/page.tsx` | Case study + `generateStaticParams`        |
+| `/contact`         | `app/contact/page.tsx`         | Channels, availability + message form      |
 
 ---
 
@@ -187,21 +199,21 @@ All copy lives in `config/site.ts` → `contactPage`:
 | Field              | Purpose                                               |
 | ------------------ | ----------------------------------------------------- |
 | `title` / `intro`  | Page heading and opening paragraph                    |
-| `channels`         | The stacked cards (email, response time, availability, location) |
+| `channels`         | Stacked cards (email, response time, availability, location) |
 | `openTo`           | Ruled list of the work you want to be contacted about |
-| `form`             | Labels, project types, consent line, success message  |
+| `form`             | Labels, project types, consent line, success message, `stubNote` |
 
-Each channel takes an `icon` key: `"mail"`, `"clock"`, `"calendar"`, `"map"`,
-`"github"`, or `"linkedin"`. Add an `href` to make the value a link, or omit it
-for plain text.
+Each channel takes an `icon` key: `"mail"`, `"clock"`, `"calendar"`, `"map"`, `"github"`, or `"linkedin"`. Add an `href` to make the value a link, or omit it for plain text.
 
 ### Wiring the form
 
-The form validates in the browser and shows a success panel, but nothing is sent
-by default. Replace the body of `sendInquiry` in `components/contact-form.tsx`
-with your provider (Formspree, Getform, Resend + a route handler, ...), then
-delete `contactPage.form.stubNote` from `config/site.ts` to remove the demo
-notice under the button.
+The form validates in the browser and shows a success panel, but **nothing is sent** until you connect a provider.
+
+**Recommended (easiest):** [Formspree](https://formspree.io) — replace the body of `sendInquiry` in `components/contact-form.tsx` with a `fetch` to your Formspree endpoint (copy-paste example is in the file header and in `DEPLOYMENT.md`).
+
+Also works: Getform, Basin, or Resend + `app/api/contact/route.ts` with an API key in host env vars (never commit `.env` files).
+
+When live, delete `contactPage.form.stubNote` from `config/site.ts` to remove the demo notice under the button.
 
 Do not add a database, Prisma, or admin dashboard for the default product.
 
@@ -210,9 +222,22 @@ Do not add a database, Prisma, or admin dashboard for the default product.
 ## Navigation & footer
 
 - **Navbar:** `components/site-navbar.tsx` — reads `siteConfig.navItems` and `siteConfig.name`
-- **Footer:** `components/site-footer.tsx` — global (root layout). Blurb + availability from `siteConfig.footer`; socials from `siteConfig.links` (X, LinkedIn, Instagram, GitHub); email from `contact.email`
+- **Footer:** `components/site-footer.tsx` — global (root layout). Blurb + availability from `siteConfig.footer`; socials from `siteConfig.links`; email from `contact.email`
 
 Edit config first; only change these components when designing a new layout.
+
+---
+
+## Images
+
+| Asset | Path |
+| ----- | ---- |
+| Hero | `public/hero.png` (or change `hero.image` in config) |
+| Service previews | `public/services/*.png` (paths in `services.items[].image`) |
+| Project covers | `public/projects/*.jpg` (or URLs) via each project’s `coverImage` |
+| Resume PDF | `public/resume.pdf` — add your file for the hero download CTA |
+
+Commit everything under `public/` before deploy. Local paths are served from that folder; remote URLs load from the internet.
 
 ---
 
@@ -228,24 +253,24 @@ Prefer theme classes (`bg-background`, `text-muted-foreground`) over hardcoded h
 
 ## Typography
 
-Default font is set in `app/layout.tsx` (Next.js `next/font`). Swap it during design for a more distinctive typeface.
+Default font is set in `app/layout.tsx` (Next.js `next/font`). Swap it there if you want a different typeface.
 
 ---
 
-## Adding sections (design phase)
+## Adding a new section
 
-1. Create files under `components/sections/` (e.g. `hero-section.tsx`)
-2. Import them from `app/page.tsx`
-3. Keep copy tied to `config/site.ts` / `data/projects.json` where possible
+Home already includes Hero, Services, Disciplines, and Case studies. To add another:
 
-Do not clone another Portfolio Sets product’s sections unless you intentionally want that design.
+1. Create a file under `components/sections/` or `components/portfolio/`
+2. Import it from `app/page.tsx`
+3. Keep copy in `config/site.ts` / `data/projects.json` where possible
 
 ---
 
 ## Adding a new page
 
 1. Add `app/your-page/page.tsx`
-2. Add a nav item in `config/site.ts`
+2. Add a nav item in `config/site.ts` → `navItems`
 3. Keep a single `h1` and accessible landmarks
 
 ---
@@ -254,5 +279,5 @@ Do not clone another Portfolio Sets product’s sections unless you intentionall
 
 - One source of truth for identity (`config/site.ts`) and projects (`data/projects.json`)
 - Prefer small edits over rewrites
-- Run `npm run build` before you deploy
-- Private Git repo + Vercel is the intended publish path (see `LICENSE.md`)
+- Run `npm run build` before you deploy (it fails if `projects.json` is missing or invalid)
+- Private Git repo + Vercel is the intended publish path (see `LICENSE.md` and `DEPLOYMENT.md`)

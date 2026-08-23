@@ -252,8 +252,7 @@ export const siteConfig = {
         title: "Responsive layouts",
         description:
           "Mobile-first pages that stay readable and tidy from phone to desktop — solid structure before fancy flourishes.",
-        image:
-          "https://images.pexels.com/photos/1092644/pexels-photo-1092644.jpeg?auto=compress&cs=tinysrgb&w=1000",
+        image: "/services/responsive-layouts.png",
         imageTone: "sand",
       },
       {
@@ -261,8 +260,7 @@ export const siteConfig = {
         title: "React interfaces",
         description:
           "Component-driven UI with React and TypeScript — forms, navigation, and interactive pieces that stay easy to follow.",
-        image:
-          "https://images.pexels.com/photos/1181263/pexels-photo-1181263.jpeg?auto=compress&cs=tinysrgb&w=1000",
+        image: "/services/react-interfaces.png",
         imageTone: "slate",
       },
       {
@@ -270,8 +268,7 @@ export const siteConfig = {
         title: "Landing pages",
         description:
           "Marketing and portfolio pages with clear hierarchy, spacing, and CTAs that guide someone to the next step.",
-        image:
-          "https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&w=1000",
+        image: "/services/landing-pages.png",
         imageTone: "rose",
       },
       {
@@ -279,8 +276,7 @@ export const siteConfig = {
         title: "UI polish",
         description:
           "Accessibility basics, focus states, loading and empty states — the small details that make a build feel finished.",
-        image:
-          "https://images.pexels.com/photos/326503/pexels-photo-326503.jpeg?auto=compress&cs=tinysrgb&w=1000",
+        image: "/services/ui-polish.png",
         imageTone: "teal",
       },
     ],

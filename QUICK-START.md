@@ -1,6 +1,6 @@
 # Quick Start Checklist
 
-Get the Clarity Developer Set shell running in about 15 minutes.
+Get the Clarity Developer Set portfolio running in about 15 minutes.
 
 ## Prerequisites
 
@@ -24,7 +24,8 @@ No environment variables are required for the default template.
   ```bash
   npm run dev
   ```
-- [ ] **Open** <http://localhost:3000> and confirm the shell loads
+- [ ] **Open** <http://localhost:3000> and confirm the site loads
+- [ ] **Click through** `/`, `/projects`, one project case study, and `/contact`
 
 ---
 
@@ -35,9 +36,10 @@ No environment variables are required for the default template.
 **File:** `config/site.ts`
 
 - [ ] Change `name`, `shortName`, and `role`
-- [ ] Update `description` and `url`
+- [ ] Update `description` and `url` (use your real domain — share links use this)
 - [ ] Set `contact.location` and `contact.email`
-- [ ] Replace social URLs in `links` (GitHub, LinkedIn, email)
+- [ ] Replace social URLs in `links` (GitHub, LinkedIn, X, Instagram, email)
+- [ ] Skim `footer`, `hero`, `services`, `disciplines`, and `contactPage` and adjust copy
 
 Page title and meta description update via `app/layout.tsx`.
 
@@ -45,9 +47,10 @@ Page title and meta description update via `app/layout.tsx`.
 
 **File:** `data/projects.json`
 
-- [ ] Replace the 2 placeholder projects with your own
+- [ ] Replace the 3 demo projects with your own
 - [ ] Set `"status": "draft"` to temporarily hide a project
 - [ ] Keep required fields: `id`, `slug`, `title`, `description`, `category`, `tech`, `completed`
+- [ ] Fill case-study fields where useful: `summary`, `caseStudy`, `role`, `deliverables`, `coverImage`
 
 ### 3. Contact (2 min)
 
@@ -58,9 +61,12 @@ Page title and meta description update via `app/layout.tsx`.
 
 ## Optional polish
 
+- [ ] Swap the hero image at `public/hero.png`
+- [ ] Swap service preview images under `public/services/`
+- [ ] Add your PDF at `public/resume.pdf` (hero “Download resume” CTA)
+- [ ] Update project `coverImage` paths or URLs in `data/projects.json`
 - [ ] Tweak theme colors in `app/globals.css`
 - [ ] Change the font in `app/layout.tsx`
-- [ ] Replace home stub in `app/page.tsx` with your designed sections under `components/sections/`
 - [ ] Copy the prompt from `AI_CUSTOMIZATION_PROMPT.md` into your AI tool
 
 ---
@@ -68,8 +74,10 @@ Page title and meta description update via `app/layout.tsx`.
 ## Pre-launch
 
 - [ ] Spell-check text in `config/site.ts` and `data/projects.json`
-- [ ] Verify external links
+- [ ] Verify external links (socials, live sites, GitHub)
+- [ ] Confirm images under `public/` are committed (Vercel only deploys what’s in git)
 - [ ] Test the mobile menu on a phone or browser tools
+- [ ] Click through `/`, `/projects`, a case study slug, and `/contact` again
 - [ ] Production build:
   ```bash
   npm run build
@@ -89,7 +97,7 @@ Page title and meta description update via `app/layout.tsx`.
 - [ ] Import the repo into [Vercel](https://vercel.com)
 - [ ] Deploy — no environment variables required
 
-Later: edit `data/projects.json`, commit, push. Done.
+Later: edit `data/projects.json` or `config/site.ts`, commit, push. Done.
 
 See `DEPLOYMENT.md` for other hosts.
 
@@ -97,9 +105,9 @@ See `DEPLOYMENT.md` for other hosts.
 
 ## Pro tips
 
-1. **Use Git from day one.** Editing JSON + pushing is the publishing workflow.
+1. **Use Git from day one.** Editing config/JSON + pushing is the publishing workflow.
 2. **Edit `config/site.ts` first.** Name, role, email, and socials flow to navbar, footer, and contact.
-3. **This is a shell.** Design homepage sections when you are ready — stubs are intentional.
+3. **Content first.** Homepage, projects, case studies, and contact are already designed — swap your details and images, then deploy.
 4. **Don’t over-customize on day one.** Ship content, iterate on visuals later.
 
 ---

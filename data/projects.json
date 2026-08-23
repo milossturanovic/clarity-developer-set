@@ -75,7 +75,7 @@
       "completionDate": "March 2025",
       "client": "Personal",
       "duration": "1 week",
-      "coverImage": "https://images.pexels.com/photos/302899/pexels-photo-302899.jpeg?auto=compress&cs=tinysrgb&w=1000",
+      "coverImage": "/projects/northside-cafe.jpg",
       "websiteUrl": "https://example.com",
       "githubUrl": "https://github.com/example/northside-cafe",
       "highlights": [
@@ -129,7 +129,7 @@
       "completionDate": "January 2025",
       "client": "Personal",
       "duration": "1 week",
-      "coverImage": "https://images.pexels.com/photos/1118873/pexels-photo-1118873.jpeg?auto=compress&cs=tinysrgb&w=1000",
+      "coverImage": "/projects/weather-dashboard.jpg",
       "websiteUrl": "https://example.com",
       "githubUrl": "https://github.com/example/weather-dashboard",
       "highlights": [
@@ -183,7 +183,7 @@
       "completionDate": "November 2024",
       "client": "Personal",
       "duration": "10 days",
-      "coverImage": "https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=1000",
+      "coverImage": "/projects/task-board.jpg",
       "githubUrl": "https://github.com/example/task-board",
       "highlights": [
         "Used controlled forms and clear empty states.",

@@ -67,7 +67,9 @@ function shouldExclude(relPath) {
   const first = relPath.split(sep)[0]
   if (EXCLUDED_TOP_LEVEL.has(first)) return true
   if (EXCLUDED_SUFFIXES.some((s) => relPath.endsWith(s))) return true
-  if (/(^|[\\/])\.env(\..+)?\.local$/.test(relPath)) return true
+  // Never ship env files — secrets must not land in the buyer zip.
+  // Matches: .env, .env.local, .env.production, .env.development.local, etc.
+  if (/(^|[\\/])\.env($|\..+$)/.test(relPath)) return true
   if (relPath === ".DS_Store" || relPath.endsWith(`${sep}.DS_Store`)) return true
   return false
 }
