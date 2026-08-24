@@ -93,3 +93,13 @@
     animation: none;
   }
 }
+
+/* Sidemenu — layout only; transition timing set inline in components/ui/sidemenu.tsx */
+@layer components {
+  .sidemenu-overlay {
+    @apply fixed inset-0 z-50;
+  }
+  .sidemenu-panel {
+    @apply fixed z-50 gap-4 p-6;
+  }
+}
