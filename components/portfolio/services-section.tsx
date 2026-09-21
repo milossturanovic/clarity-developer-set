@@ -168,7 +168,7 @@ export function ServicesSection({ className }: ServicesSectionProps) {
                   type="button"
                   role="option"
                   aria-selected={isActive}
-                  onMouseEnter={() => setActiveId(item.id)}
+                  onPointerEnter={() => setActiveId(item.id)}
                   onFocus={() => setActiveId(item.id)}
                   onClick={() => setActiveId(item.id)}
                   className={cn(
@@ -188,14 +188,23 @@ export function ServicesSection({ className }: ServicesSectionProps) {
                   </span>
                   <span
                     className={cn(
-                      "text-sm leading-relaxed text-zinc-500 transition-all duration-300 sm:text-[0.95rem]",
-                      isActive
-                        ? "translate-y-0 opacity-100"
-                        : "pointer-events-none max-sm:hidden sm:translate-y-1 sm:opacity-0"
+                      "grid min-h-0 transition-[grid-template-rows] duration-300 ease-out",
+                      isActive ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
                     )}
                     aria-hidden={!isActive}
                   >
-                    {isActive ? item.description : "\u00a0"}
+                    <span className="min-h-0 overflow-hidden">
+                      <span
+                        className={cn(
+                          "block text-sm leading-relaxed text-zinc-500 transition-opacity duration-300 sm:text-[0.95rem]",
+                          isActive
+                            ? "opacity-100"
+                            : "pointer-events-none opacity-0"
+                        )}
+                      >
+                        {item.description}
+                      </span>
+                    </span>
                   </span>
                 </button>
               )
