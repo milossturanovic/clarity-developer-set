@@ -29,6 +29,7 @@ import {
   SidemenuTitle,
   SidemenuTrigger,
 } from "@/components/ui/sidemenu"
+import { cn } from "@/lib/utils"
 
 const SHEET_DURATION_MS = 400
 const MOBILE_MENU_ID = "site-mobile-menu"
@@ -38,7 +39,12 @@ export function SiteNavbar() {
   const close = React.useCallback(() => setOpen(false), [])
 
   return (
-    <header className="sticky top-0 z-40 border-b border-zinc-100 bg-white/90 backdrop-blur-sm">
+    <header
+      className={cn(
+        "sticky top-0 z-40 border-b border-zinc-100 bg-white/90 backdrop-blur-sm",
+        open && "z-[55]"
+      )}
+    >
       <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-6 sm:px-8">
         <Link
           href="/"

@@ -100,6 +100,6 @@
     @apply fixed inset-0 z-50;
   }
   .sidemenu-panel {
-    @apply fixed z-50 gap-4 p-6;
+    @apply fixed z-[60] gap-4 p-6;
   }
 }

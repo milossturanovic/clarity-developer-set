@@ -55,6 +55,17 @@ const Sidemenu = ({
   const open = controlledOpen !== undefined ? controlledOpen : uncontrolledOpen
   const handleOpenChange = onOpenChange || setUncontrolledOpen
 
+  React.useEffect(() => {
+    if (!open) return
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return
+      event.preventDefault()
+      handleOpenChange(false)
+    }
+    window.addEventListener("keydown", onKeyDown)
+    return () => window.removeEventListener("keydown", onKeyDown)
+  }, [open, handleOpenChange])
+
   return (
     <SidemenuContext.Provider value={{ open, onOpenChange: handleOpenChange }}>
       {children}
@@ -71,22 +82,25 @@ const SidemenuTrigger = React.forwardRef<
   HTMLButtonElement,
   SidemenuTriggerProps
 >(({ className, onClick, asChild, children, ...props }, ref) => {
-  const { onOpenChange } = useSidemenu()
+  const { open, onOpenChange } = useSidemenu()
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     onClick?.(e)
-    onOpenChange(true)
+    onOpenChange(!open)
   }
 
   if (asChild && React.isValidElement(children)) {
-    return React.cloneElement(children as React.ReactElement<any>, {
+    const child = children as React.ReactElement<{
+      className?: string
+      onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
+    }>
+    return React.cloneElement(child, {
       ...props,
-      className: cn(
-        (children as React.ReactElement<{ className?: string }>).props
-          .className,
-        className
-      ),
-      onClick: handleClick,
+      className: cn(child.props.className, className),
+      onClick: (e: React.MouseEvent<HTMLButtonElement>) => {
+        child.props.onClick?.(e)
+        handleClick(e)
+      },
     })
   }
 

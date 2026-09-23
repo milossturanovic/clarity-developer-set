@@ -114,6 +114,44 @@ export function ServicesSection({ className }: ServicesSectionProps) {
   const [activeId, setActiveId] = React.useState(items[0]?.id ?? "")
   const active = items.find((item) => item.id === activeId) ?? items[0]
   const headingId = "services-heading"
+  const titleRefs = React.useRef<Record<string, HTMLElement | null>>({})
+  const lastPointer = React.useRef<{ x: number; y: number } | null>(null)
+  const activeIdRef = React.useRef(activeId)
+  activeIdRef.current = activeId
+
+  function idFromPointerY(clientY: number): string | null {
+    const titles = items
+      .map((item) => {
+        const el = titleRefs.current[item.id]
+        if (!el) return null
+        return { id: item.id, top: el.getBoundingClientRect().top }
+      })
+      .filter((row): row is { id: string; top: number } => row !== null)
+
+    if (titles.length === 0) return null
+
+    let chosen = titles[0].id
+    for (const title of titles) {
+      if (title.top <= clientY) chosen = title.id
+      else break
+    }
+    return chosen
+  }
+
+  function onListPointerMove(event: React.PointerEvent<HTMLDivElement>) {
+    if (event.pointerType === "touch") return
+
+    const last = lastPointer.current
+    if (last && last.x === event.clientX && last.y === event.clientY) {
+      return
+    }
+    lastPointer.current = { x: event.clientX, y: event.clientY }
+
+    const nextId = idFromPointerY(event.clientY)
+    if (!nextId || nextId === activeIdRef.current) return
+
+    setActiveId(nextId)
+  }
 
   if (!active || items.length === 0) return null
 
@@ -157,6 +195,10 @@ export function ServicesSection({ className }: ServicesSectionProps) {
             role="listbox"
             aria-label="Services"
             aria-activedescendant={`service-${active.id}`}
+            onPointerMove={onListPointerMove}
+            onPointerLeave={() => {
+              lastPointer.current = null
+            }}
             className="flex flex-col border-y border-zinc-200"
           >
             {items.map((item) => {
@@ -168,7 +210,6 @@ export function ServicesSection({ className }: ServicesSectionProps) {
                   type="button"
                   role="option"
                   aria-selected={isActive}
-                  onPointerEnter={() => setActiveId(item.id)}
                   onFocus={() => setActiveId(item.id)}
                   onClick={() => setActiveId(item.id)}
                   className={cn(
@@ -177,6 +218,9 @@ export function ServicesSection({ className }: ServicesSectionProps) {
                   )}
                 >
                   <span
+                    ref={(node) => {
+                      titleRefs.current[item.id] = node
+                    }}
                     className={cn(
                       "text-xl font-semibold tracking-tight transition-colors duration-200 sm:text-2xl",
                       isActive
@@ -188,7 +232,7 @@ export function ServicesSection({ className }: ServicesSectionProps) {
                   </span>
                   <span
                     className={cn(
-                      "grid min-h-0 transition-[grid-template-rows] duration-300 ease-out",
+                      "pointer-events-none grid min-h-0 transition-[grid-template-rows] duration-300 ease-out",
                       isActive ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
                     )}
                     aria-hidden={!isActive}
@@ -197,9 +241,7 @@ export function ServicesSection({ className }: ServicesSectionProps) {
                       <span
                         className={cn(
                           "block text-sm leading-relaxed text-zinc-500 transition-opacity duration-300 sm:text-[0.95rem]",
-                          isActive
-                            ? "opacity-100"
-                            : "pointer-events-none opacity-0"
+                          isActive ? "opacity-100" : "opacity-0"
                         )}
                       >
                         {item.description}
