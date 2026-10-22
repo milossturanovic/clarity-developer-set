@@ -2,9 +2,13 @@
 
 A light, minimal developer portfolio template built with Next.js 14, TypeScript, Tailwind CSS, and shadcn/ui. Designed pages are included — edit content in config and JSON, then deploy.
 
+**Live demo:** [clarity-developer-set.vercel.app](https://clarity-developer-set.vercel.app/)
+
 ![Next.js](https://img.shields.io/badge/Next.js-14-black?style=flat-square&logo=next.js)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?style=flat-square&logo=typescript)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4-38B2AC?style=flat-square&logo=tailwindcss)
+
+![Clarity Developer Set hero preview](public/clarity-hero-section.png)
 
 ---
 
@@ -136,10 +140,10 @@ clarity-developer-set/
 | `CUSTOMIZATION.md` | File-by-file edit guide |
 | `DEPLOYMENT.md` | Vercel-first deploy guide |
 | `AI_CUSTOMIZATION_PROMPT.md` | Copy-paste AI prompt |
-| `LICENSE.md` | Terms + Git hosting exception |
+| `LICENSE.md` | MIT — free to use, share, and fork |
 
 ---
 
 ## License
 
-See `LICENSE.md`. You may deploy from a **private** Git repo. Do not publish the template source publicly or redistribute the zip.
+This project is free and open source under the [MIT License](LICENSE.md). Clone it, customize it, publish it publicly, and use it for personal or commercial work.

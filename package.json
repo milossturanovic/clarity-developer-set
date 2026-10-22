@@ -2,7 +2,8 @@
   "name": "clarity-developer-set",
   "version": "1.0.0",
   "private": true,
-  "description": "Clarity Developer Set — a light minimal Next.js portfolio shell. Edit config/site.ts and data/projects.json, push to git, deploy.",
+  "license": "MIT",
+  "description": "Clarity Developer Set — a free MIT Next.js portfolio template. Edit config/site.ts and data/projects.json, push to git, deploy.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

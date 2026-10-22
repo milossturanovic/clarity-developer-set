@@ -53,9 +53,9 @@ Vercel is built by the creators of Next.js and offers the best integration.
 
 ### Deploy from GitHub (recommended)
 
-> **License note:** You may use a **private** GitHub repository to deploy your customized portfolio. That is the intended workflow. Do **not** publish the template source as a public repo or share it as a starter kit. See `LICENSE.md` → *Git Hosting and Deployment*.
+> This template is **MIT-licensed** and free to host in a public or private repo. See `LICENSE.md`.
 
-1. **Push your code to GitHub** (create a **private** repository):
+1. **Push your code to GitHub** (public or private):
    ```bash
    git init
    git add .
@@ -139,7 +139,7 @@ No env vars required for the default template.
 ## DigitalOcean App Platform
 
 1. Create app from GitHub
-2. Select the repo (keep it **private**)
+2. Select the repo
 3. Use the detected Next.js buildpack
 4. Deploy — no env vars required by default
 
@@ -185,9 +185,6 @@ Local image paths (e.g. `/hero.png`, `/services/responsive-layouts.png`) are ser
 
 ---
 
-## License reminder
+## License
 
-- **Allowed:** private repo + Vercel/Netlify/etc. + public live portfolio site
-- **Not allowed:** public template source, sharing the zip, reselling as a starter
-
-Full terms: `LICENSE.md`.
+Clarity Developer Set is free under the [MIT License](LICENSE.md). You may fork it, publish the source publicly, and use it for personal or commercial projects.

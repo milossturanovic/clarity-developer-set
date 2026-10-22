@@ -5,7 +5,7 @@ Copy the prompt below into ChatGPT, Claude, or Cursor after you unzip the templa
 ---
 
 ```text
-I purchased the Clarity Developer Set (Next.js 14 portfolio template). Help me customize it for my job search. The design is already built — do not redesign layouts or rebuild sections unless I explicitly ask.
+I cloned the free Clarity Developer Set (Next.js 14 portfolio template, MIT). Help me customize it for my job search. The design is already built — do not redesign layouts or rebuild sections unless I explicitly ask.
 
 Do not add a database, admin panel, or backend unless I ask. Do not clone another Portfolio Sets product’s sections unless I request a specific design.
 

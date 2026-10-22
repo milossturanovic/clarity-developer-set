@@ -93,7 +93,7 @@ Page title and meta description update via `app/layout.tsx`.
   git add .
   git commit -m "Initial portfolio content"
   ```
-- [ ] Push to GitHub (**private** repo recommended — see `LICENSE.md`)
+- [ ] Push to GitHub (public or private — see `LICENSE.md`)
 - [ ] Import the repo into [Vercel](https://vercel.com)
 - [ ] Deploy — no environment variables required
 
@@ -118,4 +118,4 @@ See `DEPLOYMENT.md` for other hosts.
 - `CUSTOMIZATION.md` — file-by-file guide
 - `DEPLOYMENT.md` — host-specific steps
 - `AI_CUSTOMIZATION_PROMPT.md` — AI prompt
-- `LICENSE.md` — terms + Git hosting exception
+- `LICENSE.md` — MIT (free to use and share)
