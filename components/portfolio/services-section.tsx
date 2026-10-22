@@ -4,13 +4,15 @@
  * ============================================================================
  *
  * WHAT THIS IS:
- *   Editorial services block with a left preview and a hover/focus-driven
+ *   Editorial services block with a left preview and a click/focus-driven
  *   list on the right. Copy and items live in config/site.ts → services.
  *
  * DEVELOPER EDIT NOTES:
  *   1. Edit title, intro, and items in config/site.ts → services.
  *   2. Optional item.image: path under /public or a full URL.
  *   3. item.imageTone picks the fallback placeholder palette when image is empty.
+ *   4. Active item changes on click or keyboard focus (not hover) so it works
+ *      the same in local and production.
  *
  * ============================================================================
  */
@@ -114,44 +116,6 @@ export function ServicesSection({ className }: ServicesSectionProps) {
   const [activeId, setActiveId] = React.useState(items[0]?.id ?? "")
   const active = items.find((item) => item.id === activeId) ?? items[0]
   const headingId = "services-heading"
-  const titleRefs = React.useRef<Record<string, HTMLElement | null>>({})
-  const lastPointer = React.useRef<{ x: number; y: number } | null>(null)
-  const activeIdRef = React.useRef(activeId)
-  activeIdRef.current = activeId
-
-  function idFromPointerY(clientY: number): string | null {
-    const titles = items
-      .map((item) => {
-        const el = titleRefs.current[item.id]
-        if (!el) return null
-        return { id: item.id, top: el.getBoundingClientRect().top }
-      })
-      .filter((row): row is { id: string; top: number } => row !== null)
-
-    if (titles.length === 0) return null
-
-    let chosen = titles[0].id
-    for (const title of titles) {
-      if (title.top <= clientY) chosen = title.id
-      else break
-    }
-    return chosen
-  }
-
-  function onListPointerMove(event: React.PointerEvent<HTMLDivElement>) {
-    if (event.pointerType === "touch") return
-
-    const last = lastPointer.current
-    if (last && last.x === event.clientX && last.y === event.clientY) {
-      return
-    }
-    lastPointer.current = { x: event.clientX, y: event.clientY }
-
-    const nextId = idFromPointerY(event.clientY)
-    if (!nextId || nextId === activeIdRef.current) return
-
-    setActiveId(nextId)
-  }
 
   if (!active || items.length === 0) return null
 
@@ -195,10 +159,6 @@ export function ServicesSection({ className }: ServicesSectionProps) {
             role="listbox"
             aria-label="Services"
             aria-activedescendant={`service-${active.id}`}
-            onPointerMove={onListPointerMove}
-            onPointerLeave={() => {
-              lastPointer.current = null
-            }}
             className="flex flex-col border-y border-zinc-200"
           >
             {items.map((item) => {
@@ -210,17 +170,14 @@ export function ServicesSection({ className }: ServicesSectionProps) {
                   type="button"
                   role="option"
                   aria-selected={isActive}
-                  onFocus={() => setActiveId(item.id)}
                   onClick={() => setActiveId(item.id)}
+                  onFocus={() => setActiveId(item.id)}
                   className={cn(
                     "group grid w-full grid-cols-1 gap-3 border-b border-zinc-200 py-6 text-left transition-colors last:border-b-0 sm:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] sm:gap-6 sm:py-7",
                     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2"
                   )}
                 >
                   <span
-                    ref={(node) => {
-                      titleRefs.current[item.id] = node
-                    }}
                     className={cn(
                       "text-xl font-semibold tracking-tight transition-colors duration-200 sm:text-2xl",
                       isActive
@@ -232,7 +189,7 @@ export function ServicesSection({ className }: ServicesSectionProps) {
                   </span>
                   <span
                     className={cn(
-                      "pointer-events-none grid min-h-0 transition-[grid-template-rows] duration-300 ease-out",
+                      "grid min-h-0 transition-[grid-template-rows] duration-300 ease-out",
                       isActive ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
                     )}
                     aria-hidden={!isActive}
